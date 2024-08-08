@@ -1,8 +1,10 @@
 package io.github.fanainaalves.quarkussocial.rest;
 
 import io.github.fanainaalves.quarkussocial.domain.model.User;
+import io.github.fanainaalves.quarkussocial.domain.repository.UserRepository;
 import io.github.fanainaalves.quarkussocial.rest.dto.CreateUserRequest;
 import io.quarkus.hibernate.orm.panache.PanacheQuery;
+import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -13,6 +15,13 @@ import jakarta.ws.rs.core.Response;
 @Produces(MediaType.APPLICATION_JSON)
 public class UserResource {
 
+    private final UserRepository repository;
+
+    @Inject
+    public UserResource(UserRepository repository){
+        this.repository = repository;
+    }
+
     @POST
     @Transactional
     public Response createUser(CreateUserRequest userRequest){
@@ -20,14 +29,14 @@ public class UserResource {
         user.setAge(userRequest.getAge());
         user.setName(userRequest.getName());
 
-        user.persist();
+        repository.persist(user);
 
         return Response.ok(user).build();
     }
 
     @GET
     public Response listAllUsers(){
-        PanacheQuery<User> query = User.findAll();
+        PanacheQuery<User> query = repository.findAll();
         return Response.ok(query.list()).build();
     }
 
@@ -35,9 +44,9 @@ public class UserResource {
     @Path("{id}")
     @Transactional
     public Response deleteUser( @PathParam("id") Long id){
-        User user = User.findById(id);
+        User user = repository.findById(id);
         if(user != null){
-            user.delete();
+            repository.delete(user);
             return Response.ok().build();
         }
         return Response.status(Response.Status.NOT_FOUND).build();
@@ -47,7 +56,7 @@ public class UserResource {
     @Path("{id}")
     @Transactional
     public Response updateUser( @PathParam("id") Long id, CreateUserRequest userData ){
-        User user = User.findById(id);
+        User user = repository.findById(id);
         if (user != null){
             user.setName(userData.getName());
             user.setAge(userData.getAge());
