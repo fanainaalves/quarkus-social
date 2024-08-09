@@ -1,11 +1,16 @@
 package io.github.fanainaalves.quarkussocial.rest.dto;
 
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 public class CreateUserRequest {
 
+    @NotBlank(message = "Name is required")
     private String name;
-    private Integer age;
 
+    @NotNull(message = "Age is required")
+    private Integer age;
 
     public String getName() {
         return name;
@@ -22,6 +27,4 @@ public class CreateUserRequest {
     public void setAge(Integer age) {
         this.age = age;
     }
-
-
 }
