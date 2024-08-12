@@ -1,4 +1,4 @@
-package io.github.fanainaalves.quarkussocial;
+package io.github.fanainaalves;
 
 import org.eclipse.microprofile.openapi.annotations.OpenAPIDefinition;
 import org.eclipse.microprofile.openapi.annotations.info.Contact;
