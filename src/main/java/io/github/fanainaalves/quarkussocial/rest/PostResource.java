@@ -1,7 +1,12 @@
 package io.github.fanainaalves.quarkussocial.rest;
 
+import io.github.fanainaalves.quarkussocial.domain.model.Post;
 import io.github.fanainaalves.quarkussocial.domain.model.User;
+import io.github.fanainaalves.quarkussocial.domain.repository.FollowerRepository;
+import io.github.fanainaalves.quarkussocial.domain.repository.PostRepository;
 import io.github.fanainaalves.quarkussocial.domain.repository.UserRepository;
+import io.github.fanainaalves.quarkussocial.rest.dto.CreatePostRequest;
+import io.github.fanainaalves.quarkussocial.rest.dto.PostResponse;
 import io.quarkus.panache.common.Sort;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
